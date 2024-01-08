@@ -4,35 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
     <title>Crazy Weather App</title>
   </head>
   <body>
-    <header>
-      <form>
-        <input type="search" placeholder="Enter a city..." required />
-        <input type="submit" value="Search" />
-      </form>
-    </header>
-    <main>
-      <div>
-        <h1>Berlin</h1>
-        <p>Monday 14:12, clear sky <br />Humidity: 80%, Wind: 2.12km/h</p>
-      </div>
-      <div>🌤️ 2°C</div>
-    </main>
-    <footer>
-      Coded by
-      <a href="https://github.com/feralderetes" target="_blank">Fer Alderetes</a
-      >, open-sourced on
-      <a
-        href="https://github.com/feralderetes/crazy-weather-app"
-        target="_blank"
-        >Github</a
-      >
-      and hosted on
-      <a href="https://crazy-weather-app.netlify.app" target="_blank"
-        >Netlify</a
-      >
-    </footer>
+    <div class="container">
+      <header>
+        <form>
+          <input type="search" placeholder="Enter a city..." required />
+          <input type="submit" value="Search" />
+        </form>
+      </header>
+      <main>
+        <div>
+          <h1>Berlin</h1>
+          <p>Monday 14:12, clear sky <br />Humidity: 80%, Wind: 2.12km/h</p>
+        </div>
+        <div>🌤️ 2°C</div>
+      </main>
+      <footer>
+        Coded by
+        <a href="https://github.com/feralderetes" target="_blank"
+          >Fer Alderetes</a
+        >, open-sourced on
+        <a
+          href="https://github.com/feralderetes/crazy-weather-app"
+          target="_blank"
+          >Github</a
+        >
+        and hosted on
+        <a href="https://crazy-weather-app.netlify.app" target="_blank"
+          >Netlify</a
+        >
+      </footer>
+    </div>
   </body>
 </html>

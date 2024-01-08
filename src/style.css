@@ -1,0 +1,13 @@
+body {
+  background-color: rgb(102, 102, 119);
+  font-family: "Quicksand", sans-serif;
+}
+
+.container {
+  background-color: whitesmoke;
+  max-width: 70%;
+  margin: 2% auto;
+  box-shadow: 0 30px 50px rgba(65, 50, 100, 0.8);
+  border-radius: 16px;
+  padding: 2%;
+}
