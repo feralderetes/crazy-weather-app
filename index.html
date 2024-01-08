@@ -16,17 +16,31 @@
   <body>
     <div class="container">
       <header>
-        <form>
-          <input type="search" placeholder="Enter a city..." required />
-          <input type="submit" value="Search" />
+        <form class="search-form">
+          <input
+            type="search"
+            placeholder="Enter a city..."
+            required
+            class="search-form-input"
+          />
+          <input type="submit" value="Search" class="search-form-button" />
         </form>
       </header>
       <main>
-        <div>
-          <h1>Berlin</h1>
-          <p>Monday 14:12, clear sky <br />Humidity: 80%, Wind: 2.12km/h</p>
+        <div class="weather-data">
+          <div>
+            <h1 class="weather-city">Berlin</h1>
+            <p class="weather-details">
+              Monday 14:12, clear sky <br />Humidity: <strong>80%</strong>,
+              Wind: <strong>2.12km/h</strong>
+            </p>
+          </div>
+          <div class="weather-temperature">
+            <div class="weather-temperature-icon">🌤️</div>
+            <div class="weather-temperature-value">2</div>
+            <div class="weather-temperature-unit">°C</div>
+          </div>
         </div>
-        <div>🌤️ 2°C</div>
       </main>
       <footer>
         Coded by
