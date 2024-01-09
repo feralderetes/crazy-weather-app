@@ -16,12 +16,13 @@
   <body>
     <div class="container">
       <header>
-        <form class="search-form">
+        <form class="search-form" id="search-form">
           <input
             type="search"
             placeholder="Enter a city..."
             required
             class="search-form-input"
+            id="search-form-input"
           />
           <input type="submit" value="Search" class="search-form-button" />
         </form>
@@ -29,7 +30,7 @@
       <main>
         <div class="weather-data">
           <div>
-            <h1 class="weather-city">Berlin</h1>
+            <h1 class="weather-city" id="city">Berlin</h1>
             <p class="weather-details">
               Monday 14:12, clear sky <br />Humidity: <strong>80%</strong>,
               Wind: <strong>2.12km/h</strong>
@@ -58,5 +59,6 @@
         >
       </footer>
     </div>
+    <script src="src/index.js"></script>
   </body>
 </html>
