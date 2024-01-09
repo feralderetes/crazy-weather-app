@@ -71,7 +71,7 @@ main {
 }
 
 .weather-temperature-icon {
-  font-size: 88px;
+  width: 88px;
   height: 88px;
 }
 

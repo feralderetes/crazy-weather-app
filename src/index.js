@@ -29,12 +29,20 @@ function updateWeather(response) {
   let windSpeedElement = document.querySelector("#wind-speed");
   let timeElement = document.querySelector("#time");
   let date = new Date(response.data.time * 1000);
+  let icon = document.querySelector("#icon");
+
   temperatureElement.innerHTML = temperature;
   cityElement.innerHTML = response.data.city;
   conditionElement.innerHTML = response.data.condition.description;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   timeElement.innerHTML = formatDate(date);
+  icon.innerHTML = `
+    <img
+      src="${response.data.condition.icon_url}"
+      class="weather-temperature-icon"
+    />
+  `;
 }
 
 function searchCity(city) {
