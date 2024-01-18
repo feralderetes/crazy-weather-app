@@ -90,6 +90,9 @@ main {
 .weather-forecast {
   margin-top: 20px;
   text-align: center;
+  line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
 }
 
 .weather-forecast-date {
