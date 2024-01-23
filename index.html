@@ -10,6 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
     <link rel="stylesheet" href="src/style.css" />
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <title>Crazy Weather App</title>
@@ -20,7 +24,7 @@
         <form class="search-form" id="search-form">
           <input
             type="search"
-            placeholder="Enter a city..."
+            placeholder="Search city 🔎"
             required
             class="search-form-input"
             id="search-form-input"
@@ -31,25 +35,42 @@
       <main>
         <div class="weather-data">
           <div>
-            <h1 class="weather-city" id="city">Berlin</h1>
-            <p class="weather-details">
-              <span id="time"></span>, <span id="condition"></span
-              ><br />Humidity: <strong id="humidity"></strong>, Wind:
-              <strong id="wind-speed"></strong>
-            </p>
+            <h1 class="weather-city" id="city"></h1>
+            <h2 class="weather-country" id="country"></h2>
+            <div class="weather-temperature">
+              <div class="weather-temperature-value" id="temperature"></div>
+              <div class="weather-temperature-degrees">°</div>
+              <div id="icon"></div>
+            </div>
+            <div id="condition"></div>
           </div>
-          <div class="weather-temperature">
-            <div id="icon"></div>
-            <div class="weather-temperature-value" id="temperature">2</div>
-            <div class="weather-temperature-unit">°C</div>
+          <div class="weather-details">
+            <span class="weather-details-box"
+              ><span class="material-symbols-outlined"> device_thermostat </span
+              ><br />Feels like<br />
+              <strong id="feels-like"></strong
+            ></span>
+            <span class="weather-details-box"
+              ><span class="material-symbols-outlined">
+                humidity_percentage </span
+              ><br />Humidity<br /><strong id="humidity"></strong></span
+            ><span class="weather-details-box"
+              ><span class="material-symbols-outlined"> air </span
+              ><br />Wind<br />
+              <strong id="wind-speed"></strong></span
+            ><span class="weather-details-box"
+              ><span class="material-symbols-outlined"> airware </span><br />Air
+              pressure<br /><strong id="air-pressure"></strong
+            ></span>
           </div>
         </div>
+        <div class="last-updated">Last updated: <span id="time"></span></div>
         <div class="weather-forecast" id="forecast"></div>
       </main>
       <footer>
         Coded by
         <a href="https://github.com/feralderetes" target="_blank"
-          >Fer Alderetes</a
+          >Fer Alderetes 👩🏻‍💻</a
         >, open-sourced on
         <a
           href="https://github.com/feralderetes/crazy-weather-app"
