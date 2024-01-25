@@ -44,7 +44,9 @@ function updateWeather(response) {
   cityElement.innerHTML = `${response.data.city},`;
   countryElement.innerHTML = `${response.data.country}`;
   conditionElement.innerHTML = response.data.condition.description;
-  feelsLikeElement.innerHTML = `${response.data.temperature.feels_like}°`;
+  feelsLikeElement.innerHTML = `${Math.round(
+    response.data.temperature.feels_like
+  )}°`;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed} km/h`;
   airPressureElement.innerHTML = `${response.data.temperature.pressure} hPa`;
@@ -55,7 +57,58 @@ function updateWeather(response) {
       class="weather-temperature-icon"
     />
   `;
+  setBackgroundImage(response);
   getForecast(response.data.city);
+}
+
+function setBackgroundImage(response) {
+  let background = document.querySelector("body");
+  let condition = response.data.condition.icon;
+  if (
+    condition === "clear-sky-day" ||
+    condition === "few-clouds-day" ||
+    condition === "clear-sky-night" ||
+    condition === "few-clouds-night"
+  ) {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/clear-sky.jpg");`
+    );
+  } else if (
+    condition === "scattered-clouds-day" ||
+    condition === "broken-clouds-day" ||
+    condition === "scattered-clouds-night" ||
+    condition === "broken-clouds-night"
+  ) {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/clouds.jpg");
+       background-size: cover;`
+    );
+  } else if (
+    condition === "thunderstorm-day" ||
+    condition === "thunderstorm-night"
+  ) {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/thunderstorm.jpg");`
+    );
+  } else if (condition === "snow-day" || condition === "snow-night") {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/snow.jpg");`
+    );
+  } else if (condition === "mist-day" || condition === "mist-night") {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/mist.jpg");`
+    );
+  } else {
+    background.setAttribute(
+      `style`,
+      `background-image: url("src/images/Umbrellas.jpg");`
+    );
+  }
 }
 
 function searchCity(city) {
@@ -83,7 +136,7 @@ function displayForecast(response) {
   let forecastHtml = "";
 
   response.data.daily.forEach(function (day, index) {
-    if (index < 5) {
+    if (index > 0 && index < 6) {
       forecastHtml =
         forecastHtml +
         `

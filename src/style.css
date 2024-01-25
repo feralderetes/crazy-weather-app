@@ -1,9 +1,6 @@
 body {
-  background-image: url("./images/Umbrellas.jpg");
-  background-repeat: no-repeat;
   background-size: cover;
   font-family: "Quicksand", sans-serif;
-  background-color: rgba(92, 92, 211, 0.2);
 }
 
 .container {
@@ -27,16 +24,6 @@ header {
 }
 
 .search-form-input {
-  background: rgba(92, 92, 211, 0.1);
-  border: none;
-  border-radius: 10px;
-  width: 82%;
-  padding: 15px;
-  font-size: 16px;
-  transition: all 200ms ease-in-out;
-}
-
-.search-form-input::after {
   background: rgba(92, 92, 211, 0.1);
   border: none;
   border-radius: 10px;
@@ -119,6 +106,12 @@ header {
   border-radius: 10px;
   background: rgba(92, 92, 211, 0.05);
   padding: 15px;
+  transition: all 200ms ease-in-out;
+}
+
+.weather-details-box:hover {
+  background: rgba(92, 92, 211, 0.09);
+  transform: scale(1.05);
 }
 
 .weather-details strong {
@@ -140,6 +133,12 @@ header {
   display: flex;
   justify-content: space-between;
   background: rgba(92, 92, 211, 0.05);
+  transition: all 200ms ease-in-out;
+}
+
+.weather-forecast:hover {
+  background: rgba(92, 92, 211, 0.09);
+  /* transform: scale(1.01); */
 }
 
 .weather-forecast-icon {
@@ -175,4 +174,81 @@ a {
 a:hover {
   color: rgba(92, 92, 211, 1);
   text-decoration: underline;
+}
+
+@media (max-width: 620px) {
+  .container {
+    max-width: 90%;
+    margin: 2% auto;
+  }
+
+  .search-form {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .search-form-input {
+    max-width: 70%;
+    font-size: 70%;
+  }
+
+  .search-form-button {
+    font-size: 70%;
+    margin-left: 1%;
+  }
+
+  .weather-data {
+    display: block;
+    margin-top: 10%;
+  }
+
+  .weather-city,
+  .weather-country {
+    display: inline;
+    line-height: 32px;
+  }
+
+  .weather-city {
+    font-size: 28px;
+  }
+
+  .weather-temperature-value {
+    margin-top: 1%;
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .weather-temperature-degrees {
+    margin-top: 1%;
+    font-size: 24px;
+  }
+  .weather-temperature-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  #condition {
+    font-size: 18px;
+    margin-bottom: 5%;
+  }
+
+  .last-updated {
+    font-size: 12px;
+    margin-top: 1% auto;
+  }
+  .weather-forecast {
+    margin-bottom: 10%;
+  }
+
+  .weather-forecast-temperature-max {
+    font-size: 12px;
+  }
+
+  .weather-forecast-temperature-min {
+    font-size: 12px;
+  }
+
+  footer {
+    font-size: 10px;
+  }
 }
