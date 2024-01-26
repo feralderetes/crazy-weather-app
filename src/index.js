@@ -26,41 +26,6 @@ function formatDay(timestamp) {
   return days[date.getDay()];
 }
 
-function updateWeather(response) {
-  let temperatureElement = document.querySelector("#temperature");
-  let temperature = Math.round(response.data.temperature.current);
-  let cityElement = document.querySelector("#city");
-  let countryElement = document.querySelector("#country");
-  let conditionElement = document.querySelector("#condition");
-  let feelsLikeElement = document.querySelector("#feels-like");
-  let humidityElement = document.querySelector("#humidity");
-  let windSpeedElement = document.querySelector("#wind-speed");
-  let airPressureElement = document.querySelector("#air-pressure");
-  let timeElement = document.querySelector("#time");
-  let date = new Date(response.data.time * 1000);
-  let icon = document.querySelector("#icon");
-
-  temperatureElement.innerHTML = temperature;
-  cityElement.innerHTML = `${response.data.city},`;
-  countryElement.innerHTML = `${response.data.country}`;
-  conditionElement.innerHTML = response.data.condition.description;
-  feelsLikeElement.innerHTML = `${Math.round(
-    response.data.temperature.feels_like
-  )}°`;
-  humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
-  windSpeedElement.innerHTML = `${response.data.wind.speed} km/h`;
-  airPressureElement.innerHTML = `${response.data.temperature.pressure} hPa`;
-  timeElement.innerHTML = formatDate(date);
-  icon.innerHTML = `
-    <img
-      src="${response.data.condition.icon_url}"
-      class="weather-temperature-icon"
-    />
-  `;
-  setBackgroundImage(response);
-  getForecast(response.data.city);
-}
-
 function setBackgroundImage(response) {
   let background = document.querySelector("body");
   let condition = response.data.condition.icon;
@@ -111,31 +76,47 @@ function setBackgroundImage(response) {
   }
 }
 
-function searchCity(city) {
-  let apiKey = "4a6baff0aba2ofc3b32f2f5atce330d1";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(updateWeather);
-}
-
-function handleSearchSubmit(event) {
+// changes temp from celsius to fahrenheit
+function convertToFahrenheit(event) {
   event.preventDefault();
-  let searchInput = document.querySelector("#search-form-input");
+  units = "fahrenheit";
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  temperatureElement.innerHTML = convertTemperature(units, celsiusTemperature);
 
-  searchCity(searchInput.value);
-  searchInput.value = "";
+  feelsLikeElement.innerHTML = `${convertTemperature(
+    units,
+    celsiusFeelsLike
+  )}°`;
+
+  displayForecast();
 }
 
-function getForecast(city) {
-  let apiKey = "4a6baff0aba2ofc3b32f2f5atce330d1";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayForecast);
+// changes temp from fahrenheit to celsius
+function convertToCelsius(event) {
+  event.preventDefault();
+  units = "celsius";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  temperatureElement.innerHTML = celsiusTemperature;
+  feelsLikeElement.innerHTML = `${celsiusFeelsLike}°`;
+  displayForecast();
 }
 
-function displayForecast(response) {
+// degree conversion: celsius vs. fahrenheit
+function convertTemperature(unit, temperature) {
+  if (unit === "fahrenheit") {
+    return Math.round((temperature * 9) / 5 + 32);
+  } else {
+    return Math.round(temperature);
+  }
+}
+
+function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
   let forecastHtml = "";
 
-  response.data.daily.forEach(function (day, index) {
+  forecastResponse.forEach(function (day, index) {
     if (index > 0 && index < 6) {
       forecastHtml =
         forecastHtml +
@@ -146,10 +127,12 @@ function displayForecast(response) {
           day.condition.icon_url
         }" class="weather-forecast-icon" /></div>
         <div class="weather-forecast-temperatures">
-          <span class="weather-forecast-temperature-max">${Math.round(
+          <span class="weather-forecast-temperature-max">${convertTemperature(
+            units,
             day.temperature.maximum
           )}°</span>
-          <span class="weather-forecast-temperature-min">${Math.round(
+          <span class="weather-forecast-temperature-min">${convertTemperature(
+            units,
             day.temperature.minimum
           )}°</span>
         </div>
@@ -160,7 +143,83 @@ function displayForecast(response) {
   forecastElement.innerHTML = forecastHtml;
 }
 
+function updateForecast(response) {
+  forecastResponse = response.data.daily;
+  displayForecast();
+}
+
+function getForecast(city) {
+  let apiUrl = `${baseUrl}forecast?query=${city}&key=${apiKey}`;
+  axios.get(apiUrl).then(updateForecast);
+}
+
+function updateCurrentWeather(response) {
+  let cityElement = document.querySelector("#city");
+  let countryElement = document.querySelector("#country");
+  let conditionElement = document.querySelector("#condition");
+  let humidityElement = document.querySelector("#humidity");
+  let windSpeedElement = document.querySelector("#wind-speed");
+  let airPressureElement = document.querySelector("#air-pressure");
+  let timeElement = document.querySelector("#time");
+  let date = new Date(response.data.time * 1000);
+  let icon = document.querySelector("#icon");
+
+  celsiusTemperature = Math.round(response.data.temperature.current);
+  temperatureElement.innerHTML = celsiusTemperature;
+  cityElement.innerHTML = `${response.data.city},`;
+  countryElement.innerHTML = `${response.data.country}`;
+  conditionElement.innerHTML = response.data.condition.description;
+  celsiusFeelsLike = Math.round(response.data.temperature.feels_like);
+  feelsLikeElement.innerHTML = `${celsiusFeelsLike}°`;
+  humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+  windSpeedElement.innerHTML = `${response.data.wind.speed} km/h`;
+  airPressureElement.innerHTML = `${response.data.temperature.pressure} hPa`;
+  timeElement.innerHTML = formatDate(date);
+  icon.innerHTML = `
+    <img
+      src="${response.data.condition.icon_url}"
+      class="weather-temperature-icon"
+    />
+  `;
+  setBackgroundImage(response);
+  getForecast(response.data.city);
+}
+
+function searchCity(city) {
+  let apiUrl = `${baseUrl}current?query=${city}&key=${apiKey}`;
+  axios.get(apiUrl).then(updateCurrentWeather);
+}
+
+function handleSearchSubmit(event) {
+  event.preventDefault();
+  let searchInput = document.querySelector("#search-form-input");
+
+  searchCity(searchInput.value);
+  searchInput.value = "";
+}
+
+// Degrees unit conversion events
+let celsiusTemperature = null;
+let celsiusFeelsLike = null;
+
+let fahrenheitLink = document.querySelector("#fahrenheit");
+fahrenheitLink.addEventListener("click", convertToFahrenheit);
+
+let celsiusLink = document.querySelector("#celsius");
+celsiusLink.addEventListener("click", convertToCelsius);
+
+// Global variables
+let city = null;
+let units = "metric";
+let apiKey = "4a6baff0aba2ofc3b32f2f5atce330d1";
+let baseUrl = "https://api.shecodes.io/weather/v1/";
+let forecastResponse = null;
+let temperatureElement = document.querySelector("#temperature");
+let feelsLikeElement = document.querySelector("#feels-like");
+
+// Search submit event
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
+// Default city for start
 searchCity("Berlin");
