@@ -1,3 +1,4 @@
+// Converts timestamp into readable week days
 function formatDate(date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -20,63 +21,99 @@ function formatDate(date) {
   return `${day} ${hours}:${minutes}`;
 }
 
+// Converts timestamp into short readable week days
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   return days[date.getDay()];
 }
 
+// Changes background image according to weather conditions
 function setBackgroundImage(response) {
   let background = document.querySelector("body");
   let condition = response.data.condition.icon;
-  if (
-    condition === "clear-sky-day" ||
-    condition === "few-clouds-day" ||
-    condition === "clear-sky-night" ||
-    condition === "few-clouds-night"
-  ) {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/clear-sky.jpg");`
-    );
-  } else if (
-    condition === "scattered-clouds-day" ||
-    condition === "broken-clouds-day" ||
-    condition === "scattered-clouds-night" ||
-    condition === "broken-clouds-night"
-  ) {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/clouds.jpg");
-       background-size: cover;`
-    );
-  } else if (
-    condition === "thunderstorm-day" ||
-    condition === "thunderstorm-night"
-  ) {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/thunderstorm.jpg");`
-    );
-  } else if (condition === "snow-day" || condition === "snow-night") {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/snow.jpg");`
-    );
-  } else if (condition === "mist-day" || condition === "mist-night") {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/mist.jpg");`
-    );
-  } else {
-    background.setAttribute(
-      `style`,
-      `background-image: url("src/images/Umbrellas.jpg");`
-    );
+  switch (condition) {
+    case "clear-sky-day":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/clear-sky-day.jpg");`
+      );
+      break;
+    case "clear-sky-night":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/clear-sky-night.jpg");`
+      );
+      break;
+    case ("few-clouds-day", "scattered-clouds-day"):
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/few-clouds-day.jpg");`
+      );
+      break;
+    case ("few-clouds-night", "scattered-clouds-night"):
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/few-clouds-night.jpg");`
+      );
+      break;
+    case "broken-clouds-day":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/clouds-day.jpg");`
+      );
+      break;
+    case "broken-clouds-night":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/clouds-night.jpg");`
+      );
+      break;
+    case ("thunderstorm-day", "thunderstorm-night"):
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/thunderstorm.jpg");`
+      );
+      break;
+    case "snow-day":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/snow-day.jpg");`
+      );
+      break;
+    case "snow-night":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/snow-night.jpg");`
+      );
+      break;
+    case "mist-day":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/mist-day.jpg");`
+      );
+      break;
+    case "mist-night":
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/mist-night.jpg");`
+      );
+      break;
+    case ("shower-rain-night", "rain-night"):
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/umbrellas-night.jpg");`
+      );
+      break;
+    default:
+      background.setAttribute(
+        `style`,
+        `background-image: url("src/images/umbrellas-day.jpg");`
+      );
   }
 }
 
-// changes temp from celsius to fahrenheit
+// Changes displayed temperature from celsius to fahrenheit
 function convertToFahrenheit(event) {
   event.preventDefault();
   units = "fahrenheit";
@@ -92,7 +129,7 @@ function convertToFahrenheit(event) {
   displayForecast();
 }
 
-// changes temp from fahrenheit to celsius
+// Changes displayed temperature from fahrenheit to celsius
 function convertToCelsius(event) {
   event.preventDefault();
   units = "celsius";
@@ -103,7 +140,7 @@ function convertToCelsius(event) {
   displayForecast();
 }
 
-// degree conversion: celsius vs. fahrenheit
+// Converts temperature from celsius to fahrenheit
 function convertTemperature(unit, temperature) {
   if (unit === "fahrenheit") {
     return Math.round((temperature * 9) / 5 + 32);
@@ -112,6 +149,7 @@ function convertTemperature(unit, temperature) {
   }
 }
 
+// Injects html to display maxiumum and minimum temperatures in the forecast
 function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
   let forecastHtml = "";
@@ -165,7 +203,13 @@ function updateCurrentWeather(response) {
   let icon = document.querySelector("#icon");
 
   celsiusTemperature = Math.round(response.data.temperature.current);
-  temperatureElement.innerHTML = celsiusTemperature;
+  let currentTemperature = celsiusTemperature;
+
+  if (units === "fahrenheit") {
+    currentTemperature = convertTemperature("fahrenheit", celsiusTemperature);
+  }
+
+  temperatureElement.innerHTML = currentTemperature;
   cityElement.innerHTML = `${response.data.city},`;
   countryElement.innerHTML = `${response.data.country}`;
   conditionElement.innerHTML = response.data.condition.description;
@@ -210,7 +254,7 @@ celsiusLink.addEventListener("click", convertToCelsius);
 
 // Global variables
 let city = null;
-let units = "metric";
+let units = "celsius";
 let apiKey = "4a6baff0aba2ofc3b32f2f5atce330d1";
 let baseUrl = "https://api.shecodes.io/weather/v1/";
 let forecastResponse = null;

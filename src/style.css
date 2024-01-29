@@ -33,6 +33,10 @@ header {
   transition: all 200ms ease-in-out;
 }
 
+.search-form-input:hover {
+  background: rgba(92, 92, 211, 0.15);
+}
+
 .search-form-button {
   background: rgba(92, 92, 211, 0.9);
   border: none;
