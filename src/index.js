@@ -45,13 +45,15 @@ function setBackgroundImage(response) {
         `background-image: url("src/images/clear-sky-night.jpg");`
       );
       break;
-    case ("few-clouds-day", "scattered-clouds-day"):
+    case "few-clouds-day":
+    case "scattered-clouds-day":
       background.setAttribute(
         `style`,
         `background-image: url("src/images/few-clouds-day.jpg");`
       );
       break;
-    case ("few-clouds-night", "scattered-clouds-night"):
+    case "few-clouds-night":
+    case "scattered-clouds-night":
       background.setAttribute(
         `style`,
         `background-image: url("src/images/few-clouds-night.jpg");`
@@ -69,7 +71,8 @@ function setBackgroundImage(response) {
         `background-image: url("src/images/clouds-night.jpg");`
       );
       break;
-    case ("thunderstorm-day", "thunderstorm-night"):
+    case "thunderstorm-day":
+    case "thunderstorm-night":
       background.setAttribute(
         `style`,
         `background-image: url("src/images/thunderstorm.jpg");`
@@ -99,7 +102,8 @@ function setBackgroundImage(response) {
         `background-image: url("src/images/mist-night.jpg");`
       );
       break;
-    case ("shower-rain-night", "rain-night"):
+    case "shower-rain-night":
+    case "rain-night":
       background.setAttribute(
         `style`,
         `background-image: url("src/images/umbrellas-night.jpg");`
