@@ -209,16 +209,19 @@ function updateCurrentWeather(response) {
   celsiusTemperature = Math.round(response.data.temperature.current);
   let currentTemperature = celsiusTemperature;
 
+  celsiusFeelsLike = Math.round(response.data.temperature.feels_like);
+  let feelsLike = celsiusFeelsLike;
+
   if (units === "fahrenheit") {
     currentTemperature = convertTemperature("fahrenheit", celsiusTemperature);
+    feelsLike = convertTemperature("fahrenheit", celsiusFeelsLike);
   }
 
   temperatureElement.innerHTML = currentTemperature;
   cityElement.innerHTML = `${response.data.city},`;
   countryElement.innerHTML = `${response.data.country}`;
   conditionElement.innerHTML = response.data.condition.description;
-  celsiusFeelsLike = Math.round(response.data.temperature.feels_like);
-  feelsLikeElement.innerHTML = `${celsiusFeelsLike}°`;
+  feelsLikeElement.innerHTML = `${feelsLike}°`;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed} km/h`;
   airPressureElement.innerHTML = `${response.data.temperature.pressure} hPa`;
